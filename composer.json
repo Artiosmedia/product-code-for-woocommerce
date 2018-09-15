@@ -16,7 +16,8 @@
     },
     "require-dev": {
         "wp-coding-standards/wpcs": "^1.0",
-        "dealerdirect/phpcodesniffer-composer-installer": "^0.4.3"
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.4.3",
+        "wpackagist-plugin/woocommerce": "^3.2"
     },
     "scripts": {
         "cscheck": "phpcs -s -n",
@@ -24,5 +25,16 @@
     },
     "autoload": {
         "classmap": ["classes/"]
+    },
+    "repositories":[
+        {
+            "type":"composer",
+            "url":"https://wpackagist.org"
+        }
+    ],
+    "extra": {
+        "installer-paths": {
+            "../{$name}/": ["type:wordpress-plugin"]
+        }
     }
 }
