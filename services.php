@@ -5,7 +5,9 @@
  * @package PcfWooCommerce
  */
 
+use XedinUnknown\PcfWooCommerce\Admin_Handler;
 use XedinUnknown\PcfWooCommerce\DI_Container;
+use XedinUnknown\PcfWooCommerce\Front_Handler;
 use XedinUnknown\PcfWooCommerce\PHP_Template;
 
 /**
@@ -52,6 +54,36 @@ return function ( $base_path, $base_url ) {
 				return function_exists( 'wc' )
 					? wc()
 					: null;
+			},
+
+			/*
+			 * List of handlers to run.
+			 *
+			 * @since 0.1
+			 */
+			'handlers'                        => function ( DI_Container $c ) {
+				return [
+					$c->get( 'admin_handler' ),
+					$c->get( 'front_handler' ),
+				];
+			},
+
+			/*
+			 * Handles the back-office.
+			 *
+			 * @since 0.1
+			 */
+			'admin_handler'                   => function ( DI_Container $c ) {
+				return new Admin_Handler( $c );
+			},
+
+			/*
+			 * Handles the front-office.
+			 *
+			 * @since 0.1
+			 */
+			'front_handler'                   => function ( DI_Container $c ) {
+				return new Front_Handler( $c );
 			},
 		];
 };
