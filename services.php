@@ -6,6 +6,7 @@
  */
 
 use XedinUnknown\PcfWooCommerce\DI_Container;
+use XedinUnknown\PcfWooCommerce\PHP_Template;
 
 /**
  * A factory of a service definition map.
@@ -24,6 +25,13 @@ return function ( $base_path, $base_url ) {
 			'base_dir'                => dirname( $base_path ),
 			'base_url'                => $base_url,
 			'js_path'                 => '/assets/js',
+			'templates_dir'           => '/templates',
 			'product_code_field_name' => '_ean_field',
+
+			'template_factory'        => function ( DI_Container $c ) {
+				return function ( $path ) {
+					return new PHP_Template( $path );
+				};
+			},
 		];
 };
