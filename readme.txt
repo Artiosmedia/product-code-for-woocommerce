@@ -73,10 +73,13 @@ Yes, using any quality Google Feed plugin, the unique field can be mapped if des
 
 == Upgrade Notice ==
 
-None to report as of the release version
-
+None to report as of the release version
+
+
+
 == Changelog ==
-
+
+
 1.0.0 09/05/18
 
 - Initial release
