@@ -106,7 +106,7 @@ class Plugin {
 		);
 
 		wp_register_script(
-			'woo-add-gtin1',
+			'woo-admin-add-gtin1',
 			$this->get_js_url( 'stl_admin_custom.js' ),
 			[ 'jquery' ],
 			$this->get_config( 'version' ),
