@@ -62,6 +62,41 @@ class Admin_Handler extends Handler {
 				$this->process_product_meta( $post );
 			}
 		);
+
+		add_action(
+			'woocommerce_product_after_variable_attributes',
+			/**
+			 * Outputs something after WooCommerce variable attributes.
+			 *
+			 * @param int     $loop The index of the field in the loop.
+			 * @param array   $variation_data Variation data.
+			 * @param WP_Post $variation The post that represents the variation.
+			 *
+			 * @see https://github.com/woocommerce/woocommerce/blob/1258f242ff2b663dfcd0c11ae2a428cb8af88f17/includes/admin/meta-boxes/views/html-variation-admin.php#L437
+			 */
+			function ( $loop, $variation_data, $variation ) {
+				echo $this->get_variable_fields_html( $loop, $variation_data, $variation ); // phpcs:ignore WordPress.Security.EscapeOutput
+			},
+			10,
+			3
+		);
+
+		add_action(
+			'woocommerce_save_product_variation',
+			/**
+			 * Processes a product variation.
+			 *
+			 * @since 0.1
+			 *
+			 * @param int $variation_id The ID of the variation that is being processed.
+			 * @param int $loop The index of the variation field in the loop.
+			 */
+			function ( $variation_id, $loop ) {
+				$this->process_variations_data( $variation_id, $loop );
+			},
+			10,
+			2
+		);
 	}
 
 	/**
@@ -201,6 +236,66 @@ class Admin_Handler extends Handler {
 		$gtin_meta = get_post_meta( $post_id, $field_name, true );
 		if ( empty( $gtin_meta ) ) {
 			delete_post_meta( $post_id, $field_name );
+		}
+	}
+
+	/**
+	 * Retrieves the HTML of variable product fields.
+	 *
+	 * @param int     $loop The index of the field in the loop.
+	 * @param array   $variation_data Variation data.
+	 * @param WP_Post $variation The post that represents the variation.
+	 *
+	 * @see https://github.com/woocommerce/woocommerce/blob/1258f242ff2b663dfcd0c11ae2a428cb8af88f17/includes/admin/meta-boxes/views/html-variation-admin.php#L437
+	 *
+	 * @return string The fields HTML.
+	 */
+	protected function get_variable_fields_html( $loop, $variation_data, $variation ) {
+		$field_name = $this->get_config( 'product_code_variant_field_name' );
+
+		return $this->get_template( 'variation-field' )->render(
+			[
+				'input' => $this->create_template_block(
+					'wc-text-input',
+					[
+						'id'          => vsprintf( '%1$s[%2$s]', [ $field_name, $variation->ID ] ),
+						'label'       => __( 'Product Code', 'product-code-for-woocommerce' ),
+						'desc_tip'    => true,
+						'description' => __( 'Product code refers to a company’s unique internal product identifier, needed for online product fulfillment', 'product-code-for-woocommerce' ),
+						'value'       => get_post_meta( $variation->ID, $field_name, true ),
+					]
+				),
+			]
+		);
+	}
+
+	/**
+	 * Process variation data for a product.
+	 *
+	 * @since 0.1
+	 *
+	 * @param int $variation_id The ID of the variation post that is being processed.
+	 * @param int $loop The index of the current field in the loop.
+	 */
+	protected function process_variations_data( $variation_id, $loop ) {
+		// Verify nonce.
+		if ( ! ( isset( $_POST['security'] )
+			|| wp_verify_nonce( sanitize_key( $_POST['security'] ), 'woocommerce_load_variations' ) ) ) {
+			return;
+		}
+
+		$field_name = $this->get_config( 'product_code_variant_field_name' );
+
+		// Save the product code as meta if passed.
+		if ( isset( $_POST[ $field_name ] ) && isset( $_POST[ $field_name ][ $variation_id ] ) ) {
+			$tn_post = sanitize_text_field( $_POST[ $field_name ][ $variation_id ] );
+			update_post_meta( $variation_id, $field_name, $tn_post );
+		}
+
+		// Remove product code meta if empty.
+		$tn_meta = get_post_meta( $variation_id, $field_name, true );
+		if ( empty( $tn_meta ) ) {
+			delete_post_meta( $variation_id, $field_name );
 		}
 	}
 
