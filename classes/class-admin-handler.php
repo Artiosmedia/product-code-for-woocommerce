@@ -179,7 +179,7 @@ class Admin_Handler extends Handler {
 	 *
 	 * @since 0.1
 	 *
-	 * @param int WP_Post The post that the meta data is being processed for.
+	 * @param WP_Post $post The post that the meta data is being processed for.
 	 */
 	protected function process_product_meta( $post ) {
 		// Verify nonce.
