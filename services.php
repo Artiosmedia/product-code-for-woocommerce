@@ -20,23 +20,24 @@ use XedinUnknown\PcfWooCommerce\PHP_Template;
  */
 return function ( $base_path, $base_url ) {
 		return [
-			'version'                 => '0.1',
-			'base_path'               => $base_path,
-			'base_dir'                => dirname( $base_path ),
-			'base_url'                => $base_url,
-			'js_path'                 => '/assets/js',
-			'templates_dir'           => '/templates',
-			'translations_dir'        => '/languages',
-			'text_domain'             => 'product-code-for-woocommerce',
-			'product_code_field_name' => '_ean_field',
-			'donate_paypal_btn_id'    => 'E7LS2JGFPLTH2',
+			'version'                         => '0.1',
+			'base_path'                       => $base_path,
+			'base_dir'                        => dirname( $base_path ),
+			'base_url'                        => $base_url,
+			'js_path'                         => '/assets/js',
+			'templates_dir'                   => '/templates',
+			'translations_dir'                => '/languages',
+			'text_domain'                     => 'product-code-for-woocommerce',
+			'product_code_field_name'         => '_product_code',
+			'product_code_variant_field_name' => '_product_code_variant',
+			'donate_paypal_btn_id'            => 'E7LS2JGFPLTH2',
 
 			/*
 			 * Makes templates.
 			 *
 			 * @since 0.1
 			 */
-			'template_factory'        => function ( DI_Container $c ) {
+			'template_factory'                => function ( DI_Container $c ) {
 				return function ( $path ) {
 					return new PHP_Template( $path );
 				};
