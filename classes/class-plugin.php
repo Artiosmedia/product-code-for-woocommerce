@@ -125,8 +125,10 @@ class Plugin {
 			return $links;
 		}
 
-		$slug     = basename( $plugin_data['PluginURI'] );
-		$links[2] = $this->get_template( 'link' )->render(
+		$slug          = basename( $plugin_data['PluginURI'] );
+		$link_template = $this->get_template( 'link' );
+
+		$links[2] = $link_template->render(
 			[
 				'href'    => add_query_arg(
 					[
@@ -141,6 +143,20 @@ class Plugin {
 				// translators: Plugin name placeholder.
 				'title'   => sprintf( __( 'More information about %s', 'product-code-for-woocommerce' ), $plugin_data['Name'] ),
 				'content' => __( 'View Details', 'product-code-for-woocommerce' ),
+			]
+		);
+
+		$links['donation'] = $link_template->render(
+			[
+				'href'    => add_query_arg(
+					[
+						'cmd'              => '_s-xclick',
+						'hosted_button_id' => $this->get_config( 'donate_paypal_btn_id' ),
+					],
+					'https://www.paypal.com/cgi-bin/webscr'
+				),
+				'target'  => '_blank',
+				'content' => __( 'Donation for Homeless', 'product-code-for-woocommerce' ),
 			]
 		);
 
