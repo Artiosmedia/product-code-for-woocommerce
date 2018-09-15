@@ -4,7 +4,7 @@
     <file>services.php</file>
     <file>classes</file>
 
-    <exclude>product-code-for-woocommerce.php</exclude>
+    <exclude>product-code-for-woocommerce.old.php</exclude>
 
     <rule ref="WordPress-Extra"/>
     <rule ref="WordPress-Docs"/>
