@@ -19,57 +19,11 @@ use WP_Post;
  *
  * @package PcfWooCommerce
  */
-class Plugin {
+class Plugin extends Handler {
 	/**
-	 * The container of services and configuration used by the plugin.
+	 * {@inheritdoc}
 	 *
 	 * @since 0.1
-	 *
-	 * @var DI_Container
-	 */
-	protected $config;
-
-	/**
-	 * Plugin constructor.
-	 *
-	 * @since 0.1
-	 *
-	 * @param DI_Container $config The configuration of this plugin.
-	 */
-	public function __construct( DI_Container $config ) {
-		$this->config = $config;
-	}
-
-	/**
-	 * Runs the plugin.
-	 *
-	 * @since 0.1
-	 *
-	 * @return void
-	 */
-	public function run() {
-		$this->hook();
-	}
-
-	/**
-	 * Retrieves a config value.
-	 *
-	 * @since 0.1
-	 *
-	 * @param string $key The key of the config value to retrieve.
-	 *
-	 * @return mixed The config value.
-	 */
-	public function get_config( $key ) {
-		return $this->config->get( $key );
-	}
-
-	/**
-	 * Adds plugin hooks.
-	 *
-	 * @since 0.1
-	 *
-	 * @return void
 	 */
 	protected function hook() {
 		add_action(
@@ -112,6 +66,17 @@ class Plugin {
 			},
 			10,
 			3
+		);
+
+		add_filter(
+			'woocommerce_product_options_inventory_product_data',
+			function () {
+				$post = get_post();
+
+				if ( $post instanceof WP_Post ) {
+					echo $this->get_inventory_fields_html( $post );
+				}
+			}
 		);
 	}
 
@@ -218,6 +183,29 @@ class Plugin {
 	}
 
 	/**
+	 * Retrieves the HTML with fields for the "Inventory" tab of the product page.
+	 *
+	 * @since 0.1
+	 *
+	 * @param WP_Post $post The post of the product for which to get the HTML.
+	 *
+	 * @return string The HTML.
+	 */
+	protected function get_inventory_fields_html( $post ) {
+		$field_name = $this->get_config( 'product_code_field_name' );
+
+		return $this->get_template( 'wc-text-input' )->render(
+			[
+				'id'          => $this->get_config( 'product_code_field_name' ),
+				'label'       => __( 'Product Code', 'product-code-for-woocommerce' ),
+				'desc_tip'    => true,
+				'description' => __( 'Product code refers to a company’s unique internal product identifier, needed for online product fulfillment', 'product-code-for-woocommerce' ),
+				'value'       => get_post_meta( $post->ID, $field_name, true ),
+			]
+		);
+	}
+
+	/**
 	 * Retrieves variables to be used on a product page.
 	 *
 	 * @since 0.1
@@ -300,40 +288,6 @@ class Plugin {
 		$rel_path         = basename( $base_dir );
 
 		load_plugin_textdomain( 'product-code-for-woocommerce', false, "$rel_path/$translations_dir" );
-	}
-
-	/**
-	 * Retrieves a URL to the JS directory of the plugin.
-	 *
-	 * @since 0.1
-	 *
-	 * @param string $path The path relative to the JS directory.
-	 *
-	 * @return string The absolute URL to the JS directory.
-	 */
-	protected function get_js_url( $path = '' ) {
-		$base_url = $this->get_config( 'base_url' );
-
-		return "$base_url/assets/js/$path";
-	}
-
-	/**
-	 * Gets the template for the specified key.
-	 *
-	 * @since 0.1
-	 *
-	 * @param string $template The template key.
-	 *
-	 * @return PHP_Template The template for the key.
-	 */
-	protected function get_template( $template ) {
-		$factory       = $this->get_config( 'template_factory' );
-		$base_dir      = $this->get_config( 'base_dir' );
-		$templates_dir = $this->get_config( 'templates_dir' );
-
-		$path = "$base_dir/$templates_dir/$template.php";
-
-		return $factory( $path );
 	}
 
 	/**
