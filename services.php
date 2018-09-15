@@ -28,6 +28,11 @@ return function ( $base_path, $base_url ) {
 			'templates_dir'           => '/templates',
 			'product_code_field_name' => '_ean_field',
 
+			/*
+			 * Makes templates.
+			 *
+			 * @since 0.1
+			 */
 			'template_factory'        => function ( DI_Container $c ) {
 				return function ( $path ) {
 					return new PHP_Template( $path );
