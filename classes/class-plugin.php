@@ -73,6 +73,15 @@ class Plugin {
 				$this->register_assets();
 			}
 		);
+
+		add_filter(
+			'plugin_row_meta',
+			function ( $links, $plugin_file, $plugin_data ) {
+				return $this->plugin_row_filter( $links, $plugin_file, $plugin_data );
+			},
+			10,
+			3
+		);
 	}
 
 	/**
@@ -97,6 +106,45 @@ class Plugin {
 			$this->get_config( 'version' ),
 			false
 		);
+	}
+
+	/**
+	 * Modifies the list of links for this plugin, improving it.
+	 *
+	 * @since 0.1
+	 *
+	 * @param array  $links List of links for plugin.
+	 * @param string $plugin_file The name of the plugin file.
+	 * @param array  $plugin_data Info about the plugin. See {@link https://core.trac.wordpress.org/browser/tags/4.9.8/src/wp-admin/includes/class-wp-plugins-list-table.php#L805}.
+	 *
+	 * @return array A list of links.
+	 */
+	protected function plugin_row_filter( $links, $plugin_file, $plugin_data ) {
+		// Not our plugin.
+		if ( plugin_basename( $plugin_file ) !== plugin_basename( $this->get_config( 'base_path' ) ) ) {
+			return $links;
+		}
+
+		$slug     = basename( $plugin_data['PluginURI'] );
+		$links[2] = $this->get_template( 'link' )->render(
+			[
+				'href'    => add_query_arg(
+					[
+						'tab'       => 'plugin-information',
+						'plugin'    => $slug,
+						'TB_iframe' => 'true',
+						'width'     => 772,
+						'height'    => 563,
+					],
+					self_admin_url( 'plugin-install.php' )
+				),
+				// translators: Plugin name placeholder.
+				'title'   => sprintf( __( 'More information about %s', 'product-code-for-woocommerce' ), $plugin_data['Name'] ),
+				'content' => __( 'View Details', 'product-code-for-woocommerce' ),
+			]
+		);
+
+		return $links;
 	}
 
 	/**
