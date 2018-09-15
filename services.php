@@ -9,6 +9,7 @@ use XedinUnknown\PcfWooCommerce\Admin_Handler;
 use XedinUnknown\PcfWooCommerce\DI_Container;
 use XedinUnknown\PcfWooCommerce\Front_Handler;
 use XedinUnknown\PcfWooCommerce\PHP_Template;
+use XedinUnknown\PcfWooCommerce\Template_Block;
 
 /**
  * A factory of a service definition map.
@@ -42,6 +43,17 @@ return function ( $base_path, $base_url ) {
 			'template_factory'                => function ( DI_Container $c ) {
 				return function ( $path ) {
 					return new PHP_Template( $path );
+				};
+			},
+
+			/*
+			 * Makes blocs.
+			 *
+			 * @since 0.1
+			 */
+			'block_factory'                   => function ( DI_Container $c ) {
+				return function ( PHP_Template $template, $context ) {
+					return new Template_Block( $template, $context );
 				};
 			},
 

@@ -106,6 +106,26 @@ abstract class Handler {
 	}
 
 	/**
+	 * Creates a new template block.
+	 *
+	 * @since 0.1
+	 *
+	 * @param PHP_Template|string $template The template or template key.
+	 * @param array               $context The context for the template.
+	 *
+	 * @return Template_Block The new block.
+	 */
+	protected function create_template_block( $template, $context ) {
+		if ( ! ( $template instanceof PHP_Template ) ) {
+			$template = $this->get_template( (string) $template );
+		}
+
+		$factory = $this->get_config( 'block_factory' );
+
+		return $factory( $template, $context );
+	}
+
+	/**
 	 * Adds handler hooks.
 	 *
 	 * @since 0.1
