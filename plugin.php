@@ -43,7 +43,7 @@ function plugin() {
 		$base_dir         = dirname( $base_path );
 		$base_url         = plugins_url( '', $base_path );
 		$services_factory = require_once "$base_dir/services.php";
-		$services         = $services_factory( $base_dir, $base_url );
+		$services         = $services_factory( $base_path, $base_url );
 		$container        = new DI_Container( $services );
 
 		$instance = new Plugin( $container );
