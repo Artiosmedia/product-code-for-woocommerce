@@ -42,6 +42,26 @@ class Admin_Handler extends Handler {
 			10,
 			3
 		);
+
+		add_action(
+			'woocommerce_product_options_inventory_product_data',
+			function () {
+				$post = get_post();
+
+				if ( $post instanceof WP_Post ) {
+					echo $this->get_inventory_fields_html( $post ); // phpcs:ignore WordPress.Security.EscapeOutput
+				}
+			}
+		);
+
+		add_action(
+			'woocommerce_process_product_meta',
+			function () {
+				$post = get_post();
+
+				$this->process_product_meta( $post );
+			}
+		);
 	}
 
 	/**
@@ -127,6 +147,61 @@ class Admin_Handler extends Handler {
 		);
 
 		return $links;
+	}
+
+	/**
+	 * Retrieves the HTML with fields for the "Inventory" tab of the product page.
+	 *
+	 * @since 0.1
+	 *
+	 * @param WP_Post $post The post of the product for which to get the HTML.
+	 *
+	 * @return string The HTML.
+	 */
+	protected function get_inventory_fields_html( $post ) {
+		$field_name = $this->get_config( 'product_code_field_name' );
+
+		return $this->get_template( 'wc-text-input' )->render(
+			[
+				'id'          => $this->get_config( 'product_code_field_name' ),
+				'label'       => __( 'Product Code', 'product-code-for-woocommerce' ),
+				'desc_tip'    => true,
+				'description' => __( 'Product code refers to a company’s unique internal product identifier, needed for online product fulfillment', 'product-code-for-woocommerce' ),
+				'value'       => get_post_meta( $post->ID, $field_name, true ),
+			]
+		);
+	}
+
+	/**
+	 * Processes meta data for a product.
+	 *
+	 * Saves custom meta.
+	 *
+	 * @since 0.1
+	 *
+	 * @param int WP_Post The post that the meta data is being processed for.
+	 */
+	protected function process_product_meta( $post ) {
+		// Verify nonce.
+		if ( ! ( isset( $_POST['woocommerce_meta_nonce'] )
+			|| wp_verify_nonce( sanitize_key( $_POST['woocommerce_meta_nonce'] ), 'woocommerce_save_data' ) ) ) {
+			return;
+		}
+
+		$field_name = $this->get_config( 'product_code_field_name' );
+		$post_id    = $post->ID;
+
+		// Save the product code as meta if passed.
+		if ( isset( $_POST[ $field_name ] ) ) {
+			$gtin_post = sanitize_text_field( $_POST[ $field_name ] );
+			update_post_meta( $post_id, $field_name, $gtin_post );
+		}
+
+		// Remove product code meta if empty.
+		$gtin_meta = get_post_meta( $post_id, $field_name, true );
+		if ( empty( $gtin_meta ) ) {
+			delete_post_meta( $post_id, $field_name );
+		}
 	}
 
 	/**
