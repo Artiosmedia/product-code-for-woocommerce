@@ -3,6 +3,7 @@
     <file>plugin.php</file>
     <file>services.php</file>
     <file>classes</file>
+    <file>templates</file>
 
     <exclude>product-code-for-woocommerce.old.php</exclude>
 
