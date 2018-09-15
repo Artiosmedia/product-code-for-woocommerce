@@ -42,5 +42,16 @@ return function ( $base_path, $base_url ) {
 					return new PHP_Template( $path );
 				};
 			},
+
+			/*
+			 * WooCommerce singleton, or null if WC not installed.
+			 *
+			 * @since 0.1
+			 */
+			'woocommerce'                     => function ( DI_Container $c ) {
+				return function_exists( 'wc' )
+					? wc()
+					: null;
+			},
 		];
 };

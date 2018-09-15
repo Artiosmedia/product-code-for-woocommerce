@@ -7,6 +7,11 @@
 
 namespace XedinUnknown\PcfWooCommerce;
 
+use WC_Product_Composite;
+use WC_Product_Variable;
+use WooCommerce;
+use WP_Post;
+
 /**
  * Plugin's main class.
  *
@@ -73,6 +78,7 @@ class Plugin {
 				$this->load_translations();
 			}
 		);
+
 		add_action(
 			'init',
 			function () {
@@ -85,6 +91,16 @@ class Plugin {
 			function () {
 				if ( function_exists( 'is_product' ) && is_product() ) {
 					$this->enqueue_assets_product();
+				}
+			}
+		);
+
+		add_action(
+			'admin_enqueue_scripts',
+			function () {
+				$post = get_post();
+				if ( $post && $this->is_product( $post ) ) {
+					$this->enqueue_assets_admin();
 				}
 			}
 		);
@@ -130,6 +146,20 @@ class Plugin {
 	 */
 	protected function enqueue_assets_product() {
 		wp_enqueue_script( 'woo-add-gtin1' );
+	}
+
+	/**
+	 * Enqueues assets necessary for the admin pages.
+	 *
+	 * @since 0.1
+	 */
+	protected function enqueue_assets_admin() {
+		wp_enqueue_script( 'woo-admin-add-gtin1' );
+
+		$post = get_post();
+		if ( $post && $this->is_product( $post ) ) {
+			wp_localize_script( 'woo-admin-add-gtin1', 'wooGtinVars', $this->get_product_page_vars( $post ) );
+		}
 	}
 
 	/**
@@ -188,6 +218,78 @@ class Plugin {
 	}
 
 	/**
+	 * Retrieves variables to be used on a product page.
+	 *
+	 * @since 0.1
+	 *
+	 * @param WP_Post $post The post for which to get the vars.
+	 *
+	 * @return array The map of variable names to values.
+	 */
+	protected function get_product_page_vars( $post ) {
+
+		$vars = [
+			'gtin' => get_post_meta( $post->ID, $this->get_config( 'product_code_field_name' ), true ),
+		];
+
+		$wc = $this->get_config( 'woocommerce' );
+
+		// WooCommerce not installed.
+		if ( ! ( $wc instanceof WooCommerce ) ) {
+			return $vars;
+		}
+
+		$variations           = [];
+		$composite_variations = [];
+
+		// Handling variations before WooCommerce 3.2.
+		if ( version_compare( $wc->version, '3.2', 'lt' ) ) {
+			$vars       = new WC_Product_Variable( $post->ID );
+			$variations = $vars->get_available_variations();
+		} else {
+			$product = $wc->product_factory->get_product( $post );
+
+			if ( $product->is_type( 'variable' ) ) {
+				$variations = $product->get_available_variations();
+			}
+
+			if ( $product->is_type( 'composite' ) ) {
+				/* @var $product WC_Product_Composite */
+				$vars['is_composite'] = true;
+
+				$components = $product->get_composite_data();
+				foreach ( $components as $component_id => $component ) {
+					$comp        = $product->get_component( $component_id );
+					$product_ids = $comp->get_options();
+
+					foreach ( $product_ids as $id ) {
+						$variable_product       = new WC_Product_Variable( $id );
+						$composite_variations[] = $variable_product->get_available_variations();
+					}
+				}
+			}
+		}
+
+		$variant_field_name = $this->get_config( 'product_code_variant_field_name' );
+
+		foreach ( $variations as $variation ) {
+			if ( ! empty( $variation ) && false !== $variation['variation_is_active'] ) {
+				$vars['variation_gtins'][ $variation['variation_id'] ] = get_post_meta( $variation['variation_id'], $variant_field_name, true );
+			}
+		}
+
+		foreach ( $composite_variations as $id => $comp_variation ) {
+			foreach ( $comp_variation as $variation ) {
+				if ( ! empty( $variation ) && false !== $variation['variation_is_active'] ) {
+					$vars['composite_variation_pcm'][ $variation['variation_id'] ] = get_post_meta( $variation['variation_id'], $variant_field_name, true );
+				}
+			}
+		}
+
+		return $vars;
+	}
+
+	/**
 	 * Loads the plugin translations.
 	 *
 	 * @since 0.1
@@ -232,5 +334,20 @@ class Plugin {
 		$path = "$base_dir/$templates_dir/$template.php";
 
 		return $factory( $path );
+	}
+
+	/**
+	 * Checks if a post is a product.
+	 *
+	 * @since 0.1
+	 *
+	 * @param WP_Post $post The post to check.
+	 *
+	 * @return bool True if the post is a product; false otherwise.
+	 */
+	protected function is_product( $post ) {
+		$type = $post->post_type;
+
+		return in_array( $type, [ 'product', 'product_variation' ], true );
 	}
 }
