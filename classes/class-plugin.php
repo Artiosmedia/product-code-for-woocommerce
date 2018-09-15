@@ -113,4 +113,23 @@ class Plugin {
 
 		return "$base_url/assets/js/$path";
 	}
+
+	/**
+	 * Gets the template for the specified key.
+	 *
+	 * @since 0.1
+	 *
+	 * @param string $template The template key.
+	 *
+	 * @return PHP_Template The template for the key.
+	 */
+	protected function get_template( $template ) {
+		$factory       = $this->get_config( 'template_factory' );
+		$base_dir      = $this->get_config( 'base_dir' );
+		$templates_dir = $this->get_config( 'templates_dir' );
+
+		$path = "$base_dir/$templates_dir/$template.php";
+
+		return $factory( $path );
+	}
 }
