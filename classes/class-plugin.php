@@ -80,6 +80,15 @@ class Plugin {
 			}
 		);
 
+		add_action(
+			'wp_enqueue_scripts',
+			function () {
+				if ( function_exists( 'is_product' ) && is_product() ) {
+					$this->enqueue_assets_product();
+				}
+			}
+		);
+
 		add_filter(
 			'plugin_row_meta',
 			function ( $links, $plugin_file, $plugin_data ) {
@@ -112,6 +121,15 @@ class Plugin {
 			$this->get_config( 'version' ),
 			false
 		);
+	}
+
+	/**
+	 * Enqueues assets necessary for the product page.
+	 *
+	 * @since 0.1
+	 */
+	protected function enqueue_assets_product() {
+		wp_enqueue_script( 'woo-add-gtin1' );
 	}
 
 	/**
