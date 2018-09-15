@@ -17,5 +17,12 @@
     "require-dev": {
         "wp-coding-standards/wpcs": "^1.0",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.4.3"
+    },
+    "scripts": {
+        "cscheck": "phpcs -s -n",
+        "csfix": "phpcbf --standard=phpcs.xml"
+    },
+    "autoload": {
+        "classmap": ["classes/"]
     }
 }

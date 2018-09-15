@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<ruleset name="Test_Project">
+    <file>product-code-for-woocommerce.php</file>
+    <file>classes</file>
+
+    <rule ref="WordPress-Extra"/>
+    <rule ref="WordPress-Docs"/>
+</ruleset>
