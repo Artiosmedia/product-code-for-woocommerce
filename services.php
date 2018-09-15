@@ -26,6 +26,8 @@ return function ( $base_path, $base_url ) {
 			'base_url'                => $base_url,
 			'js_path'                 => '/assets/js',
 			'templates_dir'           => '/templates',
+			'translations_dir'        => '/languages',
+			'text_domain'             => 'product-code-for-woocommerce',
 			'product_code_field_name' => '_ean_field',
 			'donate_paypal_btn_id'    => 'E7LS2JGFPLTH2',
 

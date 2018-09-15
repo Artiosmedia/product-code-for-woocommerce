@@ -68,6 +68,12 @@ class Plugin {
 	 */
 	protected function hook() {
 		add_action(
+			'plugins_loaded',
+			function () {
+				$this->load_translations();
+			}
+		);
+		add_action(
 			'init',
 			function () {
 				$this->register_assets();
@@ -161,6 +167,19 @@ class Plugin {
 		);
 
 		return $links;
+	}
+
+	/**
+	 * Loads the plugin translations.
+	 *
+	 * @since 0.1
+	 */
+	protected function load_translations() {
+		$base_dir         = $this->get_config( 'base_dir' );
+		$translations_dir = trim( $this->get_config( 'translations_dir' ), '/' );
+		$rel_path         = basename( $base_dir );
+
+		load_plugin_textdomain( 'product-code-for-woocommerce', false, "$rel_path/$translations_dir" );
 	}
 
 	/**
