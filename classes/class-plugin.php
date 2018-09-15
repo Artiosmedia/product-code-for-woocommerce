@@ -67,6 +67,36 @@ class Plugin {
 	 * @return void
 	 */
 	protected function hook() {
+		add_action(
+			'init',
+			function () {
+				$this->register_assets();
+			}
+		);
+	}
+
+	/**
+	 * Registers assets used by the plugin.
+	 *
+	 * @since 0.1.0
+	 * @return void
+	 */
+	protected function register_assets() {
+		wp_register_script(
+			'woo-add-gtin1',
+			$this->get_js_url( 'stl_custom.js' ),
+			[ 'wc-add-to-cart-variation', 'jquery' ],
+			$this->get_config( 'version' ),
+			false
+		);
+
+		wp_register_script(
+			'woo-add-gtin1',
+			$this->get_js_url( 'stl_admin_custom.js' ),
+			[ 'jquery' ],
+			$this->get_config( 'version' ),
+			false
+		);
 	}
 
 	/**
