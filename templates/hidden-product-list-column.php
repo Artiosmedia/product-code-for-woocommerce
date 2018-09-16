@@ -8,6 +8,6 @@
  */
 
 ?>
-<div class="hidden product_code" id="product_code_inline_<?php echo $c( 'post_id' ); ?>">
-	<div id="product_codeddd"><?php echo $c( 'product_code' ); ?></div>
+<div class="hidden product_code" id="product_code_inline_<?php echo esc_attr( $c( 'post_id' ) ); ?>">
+	<div id="product_codeddd"><?php echo esc_html( $c( 'product_code' ) ); ?></div>
 </div>
