@@ -35,6 +35,13 @@ class Front_Handler extends Handler {
 				}
 			}
 		);
+
+		add_action(
+			'woocommerce_product_meta_start',
+			function () {
+				echo $this->get_product_meta_before_html();
+			}
+		);
 	}
 
 	/**
@@ -62,4 +69,19 @@ class Front_Handler extends Handler {
 		wp_enqueue_script( 'woo-add-gtin1' );
 	}
 
+	protected function get_product_meta_before_html()	{
+		$post = get_post();
+		$value = get_post_meta( $post->ID, $this->get_config( 'product_code_field_name' ), true );
+
+		if ( empty( $value ) ) {
+			return '';
+		}
+
+		return $this->get_template('product-meta-row' )->render(
+			[
+				'title' => __( 'Product Code', 'product-code-for-woocommerce' ),
+				'value' => $value
+			]
+		);
+	}
 }
