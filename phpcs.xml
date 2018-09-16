@@ -5,8 +5,6 @@
     <file>classes</file>
     <file>templates</file>
 
-    <exclude>product-code-for-woocommerce.old.php</exclude>
-
     <rule ref="WordPress-Extra"/>
     <rule ref="WordPress-Docs"/>
 </ruleset>
