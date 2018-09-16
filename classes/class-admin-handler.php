@@ -7,6 +7,7 @@
 
 namespace XedinUnknown\PcfWooCommerce;
 
+use WC_Product;
 use WC_Product_Composite;
 use WC_Product_Variable;
 use WP_Post;
@@ -25,10 +26,19 @@ class Admin_Handler extends Handler {
 	 */
 	protected function hook() {
 		add_action(
+			'init',
+			function () {
+				$this->register_assets();
+			}
+		);
+
+		add_action(
 			'admin_enqueue_scripts',
 			function () {
-				$post = get_post();
-				if ( $post && $this->is_product( $post ) ) {
+				$post   = get_post();
+				$screen = get_current_screen();
+
+				if ( ( $post && $this->is_product( $post ) ) || ( $screen && 'product' === $screen->post_type ) ) {
 					$this->enqueue_assets_admin();
 				}
 			}
@@ -93,6 +103,51 @@ class Admin_Handler extends Handler {
 			 */
 			function ( $variation_id, $loop ) {
 				$this->process_variations_data( $variation_id, $loop );
+			},
+			10,
+			2
+		);
+
+		add_action(
+			'woocommerce_product_quick_edit_end',
+			function () {
+				echo $this->get_quick_edit_fields_html(); // phpcs:ignore WordPress.Security.EscapeOutput
+			}
+		);
+
+		add_action(
+			'woocommerce_product_quick_edit_save',
+			/**
+			 * Processes quick edit data for a product.
+			 *
+			 * @since 0.1
+			 *
+			 * @see https://github.com/woocommerce/woocommerce/blob/4fd6dbd880ace84567649d4747f6e812014e609c/includes/admin/class-wc-admin-post-types.php#L437
+			 *
+			 * @param WC_Product $product The product for which data is being processed.
+			 */
+			function ( $product ) {
+				$this->process_quick_edit_data( $product );
+			}
+		);
+		
+		add_action(
+			'manage_product_posts_custom_column',
+
+			/**
+			 * Retrieves the HTML for the hidden product list column.
+			 *
+			 * @since 0.1
+			 *
+			 * @param string $column The name of the column being managed.
+			 * @param int    $post_id The ID of the post for which the row is being generated.
+			 *
+			 * @return string The HTML.
+			 */
+			function ( $column, $post_id ) {
+				if ( 'name' === $column ) {
+					echo $this->get_hidden_product_list_column_html( $column, $post_id ); // phpcs:ignore WordPress.Security.EscapeOutput
+				}
 			},
 			10,
 			2
@@ -369,6 +424,68 @@ class Admin_Handler extends Handler {
 		}
 
 		return $vars;
+	}
+
+	/**
+	 * Retrieves the HTML for quick edit fields.
+	 *
+	 * @since 0.1
+	 *
+	 * @return string The HTML.
+	 */
+	protected function get_quick_edit_fields_html() {
+		return $this->get_template( 'quick-edit-text-field' )->render(
+			[
+				'title' => __( 'Product Code', 'product-code-for-woocommerce' ),
+				'name'  => $this->get_config( 'product_code_field_name' ),
+				'class' => 'product_code',
+			]
+		);
+	}
+
+	/**
+	 * Processes quick edit data for a product.
+	 *
+	 * @since 0.1
+	 *
+	 * @param WC_Product $product The product for which data is being processed.
+	 */
+	protected function process_quick_edit_data( $product ) {
+		// Verify nonce.
+		if ( ! ( isset( $_POST['woocommerce_quick_edit_nonce'] )
+			|| wp_verify_nonce( sanitize_key( $_POST['woocommerce_quick_edit_nonce'] ), 'woocommerce_quick_edit_nonce' ) ) ) {
+			return;
+		}
+
+		$field_name = $this->get_config( 'product_code_field_name' );
+
+		if ( $product->is_type( 'simple' ) || $product->is_type( 'external' ) ) {
+			$post_id = $product->get_id();
+
+			if ( isset( $_REQUEST[ $field_name ] ) ) {
+				$product_code = sanitize_text_field( $_REQUEST[ $field_name ] );
+				update_post_meta( $post_id, $field_name, $product_code );
+			}
+		}
+	}
+
+	/**
+	 * Retrieves the HTML for the hidden product list column.
+	 *
+	 * @since 0.1
+	 *
+	 * @param string $column The name of the column being managed.
+	 * @param int    $post_id The ID of the post for which the row is being generated.
+	 *
+	 * @return string The HTML.
+	 */
+	protected function get_hidden_product_list_column_html( $column, $post_id ) {
+		return $this->get_template( 'hidden-product-list-column' )->render(
+			[
+				'post_id'      => $post_id,
+				'product_code' => get_post_meta( $post_id, $this->get_config( 'product_code_field_name' ), true ),
+			]
+		);
 	}
 
 	/**
