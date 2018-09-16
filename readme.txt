@@ -79,7 +79,5 @@ None to report as of the release version
 
 == Changelog ==
 
-
-1.0.0 09/05/18
-
-- Initial release
+= 0.1.0-alpha1 (2018-06-16) =
+* Initial release
