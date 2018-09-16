@@ -48,6 +48,7 @@ class Plugin extends Handler {
 			}
 		);
 	}
+
 	/**
 	 * Loads the plugin translations.
 	 *
