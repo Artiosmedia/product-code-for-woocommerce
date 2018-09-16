@@ -5,7 +5,7 @@
  * @package PcfWooCommerce
  */
 
-namespace XedinUnknown\PcfWooCommerce;
+namespace Artiosmedia\PcfWooCommerce;
 
 use WC_Product;
 use WC_Product_Composite;

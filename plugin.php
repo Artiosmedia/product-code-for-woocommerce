@@ -21,7 +21,7 @@
  * WC tested up to: 3.4.5
  */
 
-namespace XedinUnknown\PcfWooCommerce;
+namespace Artiosmedia\PcfWooCommerce;
 
 /**
  * Retrieves the plugin singleton.

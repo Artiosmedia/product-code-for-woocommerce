@@ -1,5 +1,5 @@
 {
-    "name": "xedinunknown/product-code-for-woocommerce",
+    "name": "artiosmedia/product-code-for-woocommerce",
     "description": "This plugin will allow a user to add a unique internal product identifier in addition to the GTIN, EAN, SKU and UPC throughout the order process.",
     "type": "wordpress-plugin",
     "license": "GPLv3",

@@ -5,7 +5,7 @@
  * @package PcfWooCommerce
  */
 
-namespace XedinUnknown\PcfWooCommerce;
+namespace Artiosmedia\PcfWooCommerce;
 
 use Exception;
 use OutOfRangeException;

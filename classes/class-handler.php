@@ -5,12 +5,12 @@
  * @package PcfWooCommerce
  */
 
-namespace XedinUnknown\PcfWooCommerce;
+namespace Artiosmedia\PcfWooCommerce;
 
 /**
  * A base class for all handlers.
  *
- * @package XedinUnknown\PcfWooCommerce
+ * @package PcfWooCommerce
  */
 abstract class Handler {
 

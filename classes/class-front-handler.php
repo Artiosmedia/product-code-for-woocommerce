@@ -5,7 +5,7 @@
  * @package PcfWooCommerce
  */
 
-namespace XedinUnknown\PcfWooCommerce;
+namespace Artiosmedia\PcfWooCommerce;
 
 /**
  * Handles the customer-facing part of the plugin.

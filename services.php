@@ -5,11 +5,11 @@
  * @package PcfWooCommerce
  */
 
-use XedinUnknown\PcfWooCommerce\Admin_Handler;
-use XedinUnknown\PcfWooCommerce\DI_Container;
-use XedinUnknown\PcfWooCommerce\Front_Handler;
-use XedinUnknown\PcfWooCommerce\PHP_Template;
-use XedinUnknown\PcfWooCommerce\Template_Block;
+use Artiosmedia\PcfWooCommerce\Admin_Handler;
+use Artiosmedia\PcfWooCommerce\DI_Container;
+use Artiosmedia\PcfWooCommerce\Front_Handler;
+use Artiosmedia\PcfWooCommerce\PHP_Template;
+use Artiosmedia\PcfWooCommerce\Template_Block;
 
 /**
  * A factory of a service definition map.
