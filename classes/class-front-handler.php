@@ -39,7 +39,7 @@ class Front_Handler extends Handler {
 		add_action(
 			'woocommerce_product_meta_start',
 			function () {
-				echo $this->get_product_meta_before_html();
+				echo $this->get_product_meta_before_html(); // phpcs:ignore WordPress.Security.EscapeOutput
 			}
 		);
 	}

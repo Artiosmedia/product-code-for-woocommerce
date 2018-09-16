@@ -130,10 +130,9 @@ class Admin_Handler extends Handler {
 				$this->process_quick_edit_data( $product );
 			}
 		);
-		
+
 		add_action(
 			'manage_product_posts_custom_column',
-
 			/**
 			 * Retrieves the HTML for the hidden product list column.
 			 *
