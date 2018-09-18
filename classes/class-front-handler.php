@@ -334,6 +334,9 @@ class Front_Handler extends Handler {
 		}
 
 		$value = $item->get_meta( $field_name );
+		if ( empty( $value ) ) {
+			return $formatted_meta;
+		}
 
 		$formatted_meta[ $field_name ] = (object) [
 			'key'           => $field_name,
