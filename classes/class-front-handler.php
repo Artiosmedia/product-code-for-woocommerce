@@ -179,6 +179,13 @@ class Front_Handler extends Handler {
 			$this->get_config( 'version' ),
 			false
 		);
+
+		wp_register_style(
+			'pcfw-single-product-styles',
+			$this->get_css_url( 'single-product.css' ),
+			$this->get_config( 'version' ),
+			false
+		);
 	}
 
 	/**
@@ -187,7 +194,12 @@ class Front_Handler extends Handler {
 	 * @since 0.1
 	 */
 	protected function enqueue_assets_product() {
-		wp_enqueue_script( 'woo-add-gtin1' );
+		$post = get_post();
+		if ( $post->post_type === 'product' ) {
+			wp_enqueue_script( 'woo-add-gtin1' );
+		}
+
+		wp_enqueue_style( 'pcfw-single-product-styles' );
 
 		$post = get_post();
 		if ( $post && $this->is_product( $post ) ) {
