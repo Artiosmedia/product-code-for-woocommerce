@@ -87,6 +87,21 @@ abstract class Handler {
 	}
 
 	/**
+	 * Retrieves a URL to the CSS directory of the handler.
+	 *
+	 * @since 0.1
+	 *
+	 * @param string $path The path relative to the CSS directory.
+	 *
+	 * @return string The absolute URL to the CSS directory.
+	 */
+	protected function get_css_url( $path = '' ) {
+		$base_url = $this->get_config( 'base_url' );
+
+		return "$base_url/assets/css/$path";
+	}
+
+	/**
 	 * Gets the template for the specified key.
 	 *
 	 * @since 0.1
