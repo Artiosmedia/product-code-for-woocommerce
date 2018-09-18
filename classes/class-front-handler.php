@@ -342,7 +342,7 @@ class Front_Handler extends Handler {
 			'key'           => $field_name,
 			'value'         => $value,
 			'display_key'   => __( 'Product Code', 'product-code-for-woocommerce' ),
-			'display_value' => wpautop( make_clickable( $value ) ),
+			'display_value' => $value,
 		];
 
 		return $formatted_meta;
