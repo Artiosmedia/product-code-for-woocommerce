@@ -5,8 +5,8 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: internal product code, company product number, product id number, product id code, second sku
 Requires at least: 3.0.1
 Tested up to: 4.9.8
-Version: 0.1
-Stable tag: 0.1
+Version: 1.0.0
+Stable tag: 1.0.0
 License: GPLv3 or later license and included
 URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -79,5 +79,5 @@ None to report as of the release version
 
 == Changelog ==
 
-= 0.1.0-alpha1 (2018-06-16) =
+= 1.0.0 (2018-09-19) =
 * Initial release

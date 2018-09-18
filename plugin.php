@@ -8,7 +8,7 @@
  * Plugin Name: Product Code for WooCommerce
  * Plugin URI: http://wordpress.org/plugins/product-code-for-woocommerce
  * Description: This plugin will allow a user to add a unique internal product identifier in addition to the GTIN, EAN, SKU and UPC throughout the order process.
- * Version: 0.1
+ * Version: 1.0.0
  * Author: Artios Media
  * Author URI: http://www.artiosmedia.com
  * Developer: Vijaya Shanthi (email : vijayasanthi@stallioni.com).
