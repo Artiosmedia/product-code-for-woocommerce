@@ -11,14 +11,14 @@
  * Version: 1.0.0
  * Author: Artios Media
  * Author URI: http://www.artiosmedia.com
- * Developer: Vijaya Shanthi (email : vijayasanthi@stallioni.com).
+ * Developer: James John (email : me@donjajo.com).
  * Copyright: © 2018 Artios Media (email : steven@artiosmedia.com).
  * License: GNU General Public License v3.0
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain: product-code-for-woocommerce
  * Domain Path: /languages
  * WC requires at least: 3.2.0
- * WC tested up to: 3.4.5
+ * WC tested up to: 3.5.1
  */
 
 
