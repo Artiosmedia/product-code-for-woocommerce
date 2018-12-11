@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Product Code for WooCommerce\n"
-"POT-Creation-Date: 2018-09-18 12:33+0200\n"
-"PO-Revision-Date: 2018-09-18 12:34+0200\n"
+"POT-Creation-Date: 2018-12-11 18:04+0100\n"
+"PO-Revision-Date: 2018-12-11 18:05+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en_US\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.2\n"
+"X-Generator: Poedit 2.2\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: product-code-for-woocommerce.php\n"
@@ -35,15 +35,16 @@ msgstr "View Details"
 msgid "Donation for Homeless"
 msgstr "Donation for Homeless"
 
-#: classes/class-admin-handler.php:248 classes/class-admin-handler.php:308
-#: classes/class-admin-handler.php:358 classes/class-front-handler.php:227
-#: classes/class-front-handler.php:287 classes/class-front-handler.php:293
-#: classes/class-front-handler.php:356 classes/class-front-handler.php:380
-#| msgid "Product code: "
+#: classes/class-admin-handler.php:250 classes/class-admin-handler.php:311
+#: classes/class-admin-handler.php:361 classes/class-front-handler.php:228
+#: classes/class-front-handler.php:286 classes/class-front-handler.php:353
+#: classes/class-front-handler.php:359 classes/class-front-handler.php:382
+#: classes/class-front-handler.php:386 classes/class-front-handler.php:422
+#: classes/class-front-handler.php:446
 msgid "Product Code"
 msgstr "Product Code"
 
-#: classes/class-admin-handler.php:250 classes/class-admin-handler.php:310
+#: classes/class-admin-handler.php:252 classes/class-admin-handler.php:313
 msgid ""
 "Product code refers to a company’s unique internal product identifier, "
 "needed for online product fulfillment"
@@ -51,32 +52,51 @@ msgstr ""
 "Product code refers to a company’s unique internal product identifier, "
 "needed for online product fulfillment"
 
-#. Plugin Name of the plugin/theme
-msgid "Product Code for WooCommerce"
-msgstr "Product Code for WooCommerce"
+#: classes/class-front-handler.php:237
+msgid "Product Code Visibility"
+msgstr "Product Code Visibility"
 
-#. Plugin URI of the plugin/theme
-msgid "http://wordpress.org/plugins/product-code-for-woocommerce"
-msgstr "http://wordpress.org/plugins/product-code-for-woocommerce"
+#: classes/class-front-handler.php:237
+msgid "Show or hide product code on product page"
+msgstr "Show or hide product code on product page"
 
-#. Description of the plugin/theme
-#| msgid ""
-#| "Plugin will allow a user to add a unique internal product identifier "
-#| "throughout the order process."
-msgid ""
-"This plugin will allow a user to add a unique internal product identifier in "
-"addition to the GTIN, EAN, SKU and UPC throughout the order process."
-msgstr ""
-"This plugin will allow a user to add a unique internal product identifier in "
-"addition to the GTIN, EAN, SKU and UPC throughout the order process."
+#: classes/class-front-handler.php:240
+msgid "Show Product"
+msgstr "Show Product"
 
-#. Author of the plugin/theme
-msgid "Artios Media"
-msgstr "Artios Media"
+#: classes/class-front-handler.php:245
+msgid "Show Product Code on Product Page"
+msgstr "Show Product Code on Product Page"
 
-#. Author URI of the plugin/theme
-msgid "http://www.artiosmedia.com"
-msgstr "http://www.artiosmedia.com"
+#: classes/class-front-handler.php:288
+msgid "N/A"
+msgstr "N/A"
+
+#: product-code-for-woocommerce.php:60
+msgid "Settings"
+msgstr "Settings"
+
+#~ msgid "Product Code for WooCommerce"
+#~ msgstr "Product Code for WooCommerce"
+
+#~ msgid "http://wordpress.org/plugins/product-code-for-woocommerce"
+#~ msgstr "http://wordpress.org/plugins/product-code-for-woocommerce"
+
+#~| msgid ""
+#~| "Plugin will allow a user to add a unique internal product identifier "
+#~| "throughout the order process."
+#~ msgid ""
+#~ "This plugin will allow a user to add a unique internal product identifier "
+#~ "in addition to the GTIN, EAN, SKU and UPC throughout the order process."
+#~ msgstr ""
+#~ "This plugin will allow a user to add a unique internal product identifier "
+#~ "in addition to the GTIN, EAN, SKU and UPC throughout the order process."
+
+#~ msgid "Artios Media"
+#~ msgstr "Artios Media"
+
+#~ msgid "http://www.artiosmedia.com"
+#~ msgstr "http://www.artiosmedia.com"
 
 #~ msgid "EAN code"
 #~ msgstr "EAN code"

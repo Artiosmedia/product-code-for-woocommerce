@@ -21,8 +21,10 @@
  * WC tested up to: 3.4.5
  */
 
-namespace Artiosmedia\PcfWooCommerce;
 
+
+namespace Artiosmedia\PcfWooCommerce;
+define( 'PRODUCT_CODE_URL', plugins_url( '', __FILE__ ) );
 /**
  * Retrieves the plugin singleton.
  *
@@ -53,3 +55,19 @@ function plugin() {
 }
 
 plugin()->run();
+
+add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), function( $links ) {
+	$links[] = sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=wc-settings&tab=products&section=product_code_settings' ), __( 'Settings', 'product-code-for-woocommerce' ) );
+
+	return $links;
+});
+
+register_activation_hook( __FILE__, function() {
+	$show_product = get_option( 'product_code' );
+	if( !$show_product ) 
+		add_option( 'product_code', 'yes' );
+});
+
+register_deactivation_hook( __FILE__, function() {
+	delete_option( 'product_code' );
+});

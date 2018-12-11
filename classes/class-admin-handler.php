@@ -241,16 +241,19 @@ class Admin_Handler extends Handler {
 	 */
 	protected function get_inventory_fields_html( $post ) {
 		$field_name = $this->get_config( 'product_code_field_name' );
+		$product = wc_get_product( $post->ID );
 
-		return $this->get_template( 'wc-text-input' )->render(
-			[
-				'id'          => $this->get_config( 'product_code_field_name' ),
-				'label'       => __( 'Product Code', 'product-code-for-woocommerce' ),
-				'desc_tip'    => true,
-				'description' => __( 'Product code refers to a company’s unique internal product identifier, needed for online product fulfillment', 'product-code-for-woocommerce' ),
-				'value'       => get_post_meta( $post->ID, $field_name, true ),
-			]
-		);
+		if( !$product->is_type( 'variable' ) ):
+			return $this->get_template( 'wc-text-input' )->render(
+				[
+					'id'          => $this->get_config( 'product_code_field_name' ),
+					'label'       => __( 'Product Code', 'product-code-for-woocommerce' ),
+					'desc_tip'    => true,
+					'description' => __( 'Product code refers to a company’s unique internal product identifier, needed for online product fulfillment', 'product-code-for-woocommerce' ),
+					'value'       => get_post_meta( $post->ID, $field_name, true ),
+				]
+			);
+		endif;
 	}
 
 	/**

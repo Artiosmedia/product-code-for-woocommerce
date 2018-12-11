@@ -153,7 +153,7 @@ class Front_Handler extends Handler {
 		);
 
 		add_action(
-			'woocommerce_product_meta_start',
+			'woocommerce_product_meta_end',
 			/**
 			 * Runs before product meta is output on a single product page.
 			 *
@@ -163,6 +163,41 @@ class Front_Handler extends Handler {
 				echo $this->get_product_meta_before_html(); // phpcs:ignore WordPress.Security.EscapeOutput
 			}
 		);
+
+		add_filter( 'woocommerce_get_sections_products', [ $this, 'add_woocommerce_settings' ] );
+		add_filter( 'woocommerce_get_settings_products', [ $this, 'add_product_code_settings' ], 10, 2 );
+
+		add_action( 'wp_enqueue_scripts', function() {
+			global $post;
+
+			if( is_single() && $post->post_type == 'product' ) {
+				wp_enqueue_script( 'product-code-for-woocommerce', PRODUCT_CODE_URL . '/assets/js/editor.js', [ 'jquery' ] );
+				wp_localize_script( 'product-code-for-woocommerce', 'PRODUCT_CODE', [ 'ajax' => admin_url( 'admin-ajax.php' ) ] );
+			}
+		});
+
+		add_action( 'wp_ajax_product_code', [ $this, 'ajax_get_product_code' ] );
+		add_action( 'wp_ajax_nopriv_product_code', [ $this, 'ajax_get_product_code' ] );
+		// add_action( $tag, $function_to_add, 10, 1 );
+	}
+
+	public function ajax_get_product_code()
+	{
+		$variant_field_name = $this->get_config( 'product_code_variant_field_name' );
+		$simple_field_name  = $this->get_config( 'product_code_field_name' );
+		
+		if( !empty( $_POST[ 'is_variant' ] ) ) {
+			$value = get_post_meta( $_POST[ 'product_code_id' ], $variant_field_name, true );
+		}
+		else 
+			$value = get_post_meta( $_POST[ 'product_code_id' ], $simple_field_name, true );
+
+		echo json_encode([
+			'status' => !empty( $value ),
+			'data' => $value
+		]);
+
+		die;
 	}
 
 	/**
@@ -186,6 +221,33 @@ class Front_Handler extends Handler {
 			$this->get_config( 'version' ),
 			false
 		);
+	}
+
+	public function add_woocommerce_settings( $sections )
+	{
+		$sections[ 'product_code_settings' ] = __( 'Product Code', 'product-code-for-woocommerce' );
+		return $sections;
+	}
+
+	public function add_product_code_settings( $settings, $current_section )
+	{
+		if( $current_section == 'product_code_settings' ) {
+			$settings_slider = array();
+			// Add Title to the Settings
+			$settings_slider[] = array( 'name' => __( 'Product Code Visibility', 'product-code-for-woocommerce' ), 'type' => 'title', 'desc' => __( 'Show or hide product code on product page', 'product-code-for-woocommerce' ), 'id' => 'product_code' );
+			// Add first checkbox option
+			$settings_slider[] = array(
+				'name'     => __( 'Show Product', 'woocommerce-product-code' ),
+				'desc_tip' => '',
+				'id'       => 'product_code',
+				'type'     => 'checkbox',
+				'css'      => 'min-width:300px;',
+				'desc'     => __( 'Show Product Code on Product Page', 'product-code-for-woocommerce' ),
+			);
+			$settings_slider[] = array( 'type' => 'sectionend', 'id' => 'product_code_settings' );
+			return $settings_slider;
+		}
+		return $settings;
 	}
 
 	/**
@@ -215,19 +277,18 @@ class Front_Handler extends Handler {
 	 * @return string The HTML to output before product meta.
 	 */
 	protected function get_product_meta_before_html() {
-		$post  = get_post();
-		$value = get_post_meta( $post->ID, $this->get_config( 'product_code_field_name' ), true );
+		if( get_option( 'product_code' ) == 'yes' ) {
+			$post  = get_post();
+			$value = get_post_meta( $post->ID, $this->get_config( 'product_code_field_name' ), true );
 
-		if ( empty( $value ) ) {
-			return '';
+			return $this->get_template( 'product-meta-row' )->render(
+				[
+					'title' => __( 'Product Code', 'product-code-for-woocommerce' ),
+					'id' => $post->ID,
+					'value' => !$value ? __( 'N/A', 'product-code-for-woocommerce' ) : $value
+				]
+			);
 		}
-
-		return $this->get_template( 'product-meta-row' )->render(
-			[
-				'title' => __( 'Product Code', 'product-code-for-woocommerce' ),
-				'value' => $value,
-			]
-		);
 	}
 
 	/**
@@ -251,6 +312,7 @@ class Front_Handler extends Handler {
 		$variant_field_name = $this->get_config( 'product_code_variant_field_name' );
 		$simple_field_name  = $this->get_config( 'product_code_field_name' );
 
+
 		$variant_value = get_post_meta( $the_id, $variant_field_name, true );
 		if ( $variant_value ) {
 			$cart_item_data[ $variant_field_name ] = sanitize_text_field( $variant_value );
@@ -260,6 +322,8 @@ class Front_Handler extends Handler {
 		if ( $simple_value ) {
 			$cart_item_data[ $simple_field_name ] = sanitize_text_field( $simple_value );
 		}
+
+		$cart_item_data[ $simple_field_name ] = get_post_meta( $product_id, $simple_field_name, true );
 
 		return $cart_item_data;
 	}
@@ -281,7 +345,9 @@ class Front_Handler extends Handler {
 	protected function retrieve_cart_item_data( $cart_item_data, $cart_item ) {
 		$variant_field_name = $this->get_config( 'product_code_variant_field_name' );
 		$simple_field_name  = $this->get_config( 'product_code_field_name' );
-
+		/*print_r( $cart_item );
+		die;*/
+		$cart_data = [];
 		if ( isset( $cart_item[ $variant_field_name ] ) ) {
 			$cart_data[] = array(
 				'name'  => __( 'Product Code', 'product-code-for-woocommerce' ),
@@ -295,7 +361,7 @@ class Front_Handler extends Handler {
 			);
 		}
 
-		return $cart_data;
+		return array_merge( $cart_item_data, $cart_data );
 	}
 
 	/**
@@ -313,11 +379,11 @@ class Front_Handler extends Handler {
 		$simple_field_name  = $this->get_config( 'product_code_field_name' );
 
 		if ( isset( $values[ $variant_field_name ] ) ) {
-			$item->add_meta_data( $variant_field_name, $values[ $variant_field_name ], false );
+			$item->add_meta_data( __( 'Product Code', 'product-code-for-woocommerce' ), $values[ $variant_field_name ], false );
 		}
 
 		if ( isset( $values[ $simple_field_name ] ) ) {
-			$item->add_meta_data( $simple_field_name, $values[ $simple_field_name ], false );
+			$item->add_meta_data( __( 'Product Code', 'product-code-for-woocommerce' ), $values[ $simple_field_name ], false );
 		}
 	}
 
