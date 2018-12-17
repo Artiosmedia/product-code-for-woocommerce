@@ -1,0 +1,37 @@
+{
+    "name": "artiosmedia/product-code-for-woocommerce",
+    "description": "This plugin will allow a user to add a unique internal product identifier in addition to the GTIN, EAN, SKU and UPC throughout the order process.",
+    "type": "wordpress-plugin",
+    "license": "GPLv3",
+    "authors": [
+        {
+            "name": "Anton Ukhanev",
+            "email": "xedin.unknown@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "^5.4 | ^7.0"
+    },
+    "require-dev": {
+    },
+    "scripts": {
+        "cscheck": "phpcs -s -n",
+        "csfix": "phpcbf --standard=phpcs.xml"
+    },
+    "autoload": {
+        "classmap": ["classes/"]
+    },
+    "repositories":[
+        {
+            "type":"composer",
+            "url":"https://wpackagist.org"
+        }
+    ],
+    "extra": {
+        "installer-paths": {
+            "../{$name}/": ["type:wordpress-plugin"]
+        }
+    }
+}
