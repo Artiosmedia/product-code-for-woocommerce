@@ -1,16 +1,16 @@
 === Product Code for WooCommerce ===
 
-Contributors: Artiosmedia
+Contributors: Artiosmedia, xedin.unknown
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=E7LS2JGFPLTH2
 Tags: internal product code, company product number, product id number, product id code, second sku
 Requires at least: 3.0.1
-Tested up to: 4.9.8
+Tested up to: 5.0.1
 Version: 1.0.0
 Stable tag: 1.0.0
 License: GPLv3 or later license and included
 URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-This plugin will allow a user to add a unique internal product identifier in addition to the GTIN, EAN, SKU and UPC throughout the order process.
+This plugin will allow a user to add a unique internal product identifier in addition to the GTIN, EAN, SKU and UPC throughout the order process. No setup, small memory footprint and concise results.
 
 == Description ==
 
@@ -59,6 +59,5 @@ None to report as of the release version
 
 == Changelog ==
 
-1.0.0 09/05/18
-
+1.0.0 12/20/18
 - Initial release
