@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Product Code for WooCommerce\n"
-"POT-Creation-Date: 2018-12-11 18:04+0100\n"
-"PO-Revision-Date: 2018-12-11 18:05+0100\n"
+"POT-Creation-Date: 2018-12-18 18:44+0100\n"
+"PO-Revision-Date: 2018-12-18 18:44+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en_US\n"
@@ -21,30 +21,15 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#. translators: Plugin name placeholder.
-#: classes/class-admin-handler.php:211
-#, php-format
-msgid "More information about %s"
-msgstr "More information about %s"
-
-#: classes/class-admin-handler.php:212
-msgid "View Details"
-msgstr "View Details"
-
-#: classes/class-admin-handler.php:226
-msgid "Donation for Homeless"
-msgstr "Donation for Homeless"
-
-#: classes/class-admin-handler.php:250 classes/class-admin-handler.php:311
-#: classes/class-admin-handler.php:361 classes/class-front-handler.php:228
-#: classes/class-front-handler.php:286 classes/class-front-handler.php:353
-#: classes/class-front-handler.php:359 classes/class-front-handler.php:382
-#: classes/class-front-handler.php:386 classes/class-front-handler.php:422
-#: classes/class-front-handler.php:446
+#: classes/Admin.php:33 classes/Main.php:73 classes/Main.php:79
+#: classes/Main.php:93 classes/Main.php:97 classes/Main.php:119
+#: classes/Main.php:129 classes/Main.php:148 templates/product-meta-row.php:13
+#: templates/quick-edit-text-field.php:13
+#: templates/quick-edit-text-field.php:15 templates/variation-field.php:14
 msgid "Product Code"
 msgstr "Product Code"
 
-#: classes/class-admin-handler.php:252 classes/class-admin-handler.php:313
+#: classes/Admin.php:35
 msgid ""
 "Product code refers to a company’s unique internal product identifier, "
 "needed for online product fulfillment"
@@ -52,29 +37,38 @@ msgstr ""
 "Product code refers to a company’s unique internal product identifier, "
 "needed for online product fulfillment"
 
-#: classes/class-front-handler.php:237
+#: classes/Main.php:157
 msgid "Product Code Visibility"
 msgstr "Product Code Visibility"
 
-#: classes/class-front-handler.php:237
+#: classes/Main.php:157
 msgid "Show or hide product code on product page"
 msgstr "Show or hide product code on product page"
 
-#: classes/class-front-handler.php:240
+#: classes/Main.php:160
 msgid "Show Product"
 msgstr "Show Product"
 
-#: classes/class-front-handler.php:245
+#: classes/Main.php:165
 msgid "Show Product Code on Product Page"
 msgstr "Show Product Code on Product Page"
 
-#: classes/class-front-handler.php:288
+#: product-code-for-woocommerce.php:37
+msgid "Settings"
+msgstr "Settings"
+
+#: templates/product-meta-row.php:14
 msgid "N/A"
 msgstr "N/A"
 
-#: product-code-for-woocommerce.php:60
-msgid "Settings"
-msgstr "Settings"
+#~ msgid "More information about %s"
+#~ msgstr "More information about %s"
+
+#~ msgid "View Details"
+#~ msgstr "View Details"
+
+#~ msgid "Donation for Homeless"
+#~ msgstr "Donation for Homeless"
 
 #~ msgid "Product Code for WooCommerce"
 #~ msgstr "Product Code for WooCommerce"

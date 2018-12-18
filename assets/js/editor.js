@@ -17,11 +17,16 @@
         product_id = $( 'input#product_id' ).val()
         
         check_product_code()
-        $( ".variations_form" ).on( "check_variations", function () {
-            product_id = $( this  ).find( '[name="variation_id"]' ).val()
+        $( ".variations_form" ).on( "show_variation", function ( e, variation ) {
+            product_id = variation.variation_id
+            
             is_variant = 1 
             check_product_code()
         } );
+
+        $( '.reset_variations' ).on( 'click', function() {
+            $( '.stl_codenum' ).html( 'N/A' )
+        })
 
     } );
 

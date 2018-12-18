@@ -21,40 +21,17 @@
  * WC tested up to: 3.5.1
  */
 
-
-
-namespace Artiosmedia\PcfWooCommerce;
+namespace Artiosmedia\WC_Product_Code;
 define( 'PRODUCT_CODE_URL', plugins_url( '', __FILE__ ) );
-/**
- * Retrieves the plugin singleton.
- *
- * @since 0.1
- *
- * @return null|Plugin
- */
-function plugin() {
-	static $instance = null;
+define( 'PRODUCT_CODE_FIELD_NAMES', [
+	'variant' => '_product_code_variant',
+	'nonvariant' => '_product_code'
+]);
+define( 'PRODUCT_CODE_TEMPLATE_PATH', __DIR__ . '/templates' );
 
-	$autoload_file = __DIR__ . '/vendor/autoload.php';
-	if ( file_exists( $autoload_file ) ) {
-		require $autoload_file;
-	}
+require_once( __DIR__ . '/vendor/autoload.php' );
 
-	if ( is_null( $instance ) ) {
-		$base_path        = __FILE__;
-		$base_dir         = dirname( $base_path );
-		$base_url         = plugins_url( '', $base_path );
-		$services_factory = require_once "$base_dir/services.php";
-		$services         = $services_factory( $base_path, $base_url );
-		$container        = new DI_Container( $services );
-
-		$instance = new Plugin( $container );
-	}
-
-	return $instance;
-}
-
-plugin()->run();
+new Main();
 
 add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), function( $links ) {
 	$links[] = sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=wc-settings&tab=products&section=product_code_settings' ), __( 'Settings', 'product-code-for-woocommerce' ) );

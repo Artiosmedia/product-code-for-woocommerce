@@ -9,9 +9,9 @@
 
 ?>
 <div style="clear:both;"></div>
-<label class="<?php echo esc_attr( $c( 'class' ) ); ?>">
-	<span class="title"><?php echo esc_html( $c( 'title' ) ); ?></span>
+<label class="product_code">
+	<span class="title"><?php _e( 'Product Code', 'product-code-for-woocommerce' )?></span>
 	<span class="input-text-wrap">
-		<input type="text" name="<?php echo esc_attr( $c( 'name' ) ); ?>" class="text" placeholder="<?php echo esc_attr( $c( 'title' ) ); ?>" value="" />
+		<input type="text" name="<?php echo $field_name?>" class="text" placeholder="<?php _e( 'Product Code', 'product-code-for-woocommerce' )?>" value="<?php echo $code?>" />
 	</span>
 </label>
