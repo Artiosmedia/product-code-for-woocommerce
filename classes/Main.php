@@ -19,7 +19,7 @@ class Main {
         add_filter( 'woocommerce_add_cart_item_data', [ $this, 'add_code_to_cart_product' ], 10, 3 );
         add_filter( 'woocommerce_get_item_data', [ $this, 'retrieve_product_code_in_cart' ], 10, 2 );
         add_action( 'woocommerce_checkout_create_order_line_item', [ $this, 'process_order_item' ], 10, 4 );
-        add_action( 'woocommerce_order_item_get_formatted_meta_data', [ $this, 'get_formatted_order_item_meta_data' ], 10, 2 );
+        // add_action( 'woocommerce_order_item_get_formatted_meta_data', [ $this, 'get_formatted_order_item_meta_data' ], 10, 2 );
         add_action( 'woocommerce_order_item_display_meta_key', [ $this, 'get_order_item_meta_display_key' ], 10, 3 );
         add_action( 'woocommerce_product_meta_start', [ $this, 'display_product_code' ] );
         add_filter( 'woocommerce_get_sections_products', [ $this, 'add_woocommerce_settings' ] );
@@ -49,7 +49,7 @@ class Main {
         $variant_field_name = PRODUCT_CODE_FIELD_NAMES[ 'variant' ];
         $simple_field_name  = PRODUCT_CODE_FIELD_NAMES[ 'nonvariant' ];
 
-        $variant_value = get_post_meta( $id, $variant_field_name, true );
+        $variant_value = esc_html( get_post_meta( $id, $variant_field_name, true ) );
         if ( $variant_value ) {
             $cart_item_data[ $variant_field_name ] = $variant_value;
         }
@@ -176,10 +176,10 @@ class Main {
         $simple_field_name  = PRODUCT_CODE_FIELD_NAMES[ 'nonvariant' ];
         
         if( !empty( $_POST[ 'is_variant' ] ) ) {
-            $value = get_post_meta( $_POST[ 'product_code_id' ], $variant_field_name, true );
+            $value = esc_html( get_post_meta( $_POST[ 'product_code_id' ], $variant_field_name, true ) );
         }
         else 
-            $value = get_post_meta( $_POST[ 'product_code_id' ], $simple_field_name, true );
+            $value = esc_html( get_post_meta( $_POST[ 'product_code_id' ], $simple_field_name, true ) );
 
         echo json_encode([
             'status' => !empty( $value ),

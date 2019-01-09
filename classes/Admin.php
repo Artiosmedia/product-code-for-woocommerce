@@ -45,10 +45,10 @@ class Admin {
         global $post;
    
         if( $post->post_type == 'product' && !empty( $_POST[ 'woocommerce_meta_nonce' ] ) && wp_verify_nonce( $_POST[ 'woocommerce_meta_nonce' ], 'woocommerce_save_data' ) ) {
-            $code = esc_html( @$_POST[ PRODUCT_CODE_FIELD_NAMES[ 'nonvariant' ] ] );
             $field_name = PRODUCT_CODE_FIELD_NAMES[ 'nonvariant' ];
 
             if( !empty( $_POST[ $field_name ] ) ) {
+                $code = sanitize_text_field( $_POST[ $field_name ] );
                 if( !add_post_meta( $post->ID, $field_name, $code, true ) )
                     update_post_meta( $post->ID, $field_name, $code );
             } else {
@@ -70,9 +70,9 @@ class Admin {
     public function save_variation_field( $variation_id )
     {
         $field_name = PRODUCT_CODE_FIELD_NAMES[ 'variant' ];
-        $code = esc_html( @$_POST[ $field_name ] );
 
         if( !empty( $_POST[ $field_name ] ) ) {
+            $code = sanitize_text_field( $_POST[ $field_name ] );
             if( !add_post_meta( $variation_id, $field_name, $code, true ) ) 
                     update_post_meta( $variation_id, $field_name, $code );
         } else {
