@@ -176,10 +176,10 @@ class Main {
         $simple_field_name  = PRODUCT_CODE_FIELD_NAMES[ 'nonvariant' ];
         
         if( !empty( $_POST[ 'is_variant' ] ) ) {
-            $value = esc_html( get_post_meta( $_POST[ 'product_code_id' ], $variant_field_name, true ) );
+            $value = get_post_meta( ( int ) $_POST[ 'product_code_id' ], $variant_field_name, true );
         }
         else 
-            $value = esc_html( get_post_meta( $_POST[ 'product_code_id' ], $simple_field_name, true ) );
+            $value = get_post_meta( ( int ) $_POST[ 'product_code_id' ], $simple_field_name, true );
 
         echo json_encode([
             'status' => !empty( $value ),
