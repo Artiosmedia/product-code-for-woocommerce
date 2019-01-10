@@ -1,6 +1,6 @@
 === Product Code for WooCommerce ===
 
-Contributors: Artiosmedia, xedin.unknown
+Contributors: Artiosmedia, Jajo
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=E7LS2JGFPLTH2
 Tags: internal product code, company product number, product id number, product id code, second sku
 Requires at least: 3.0.1
