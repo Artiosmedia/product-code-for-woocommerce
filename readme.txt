@@ -1,22 +1,22 @@
 === Product Code for WooCommerce ===
 
-Contributors: Artiosmedia
+Contributors: Artiosmedia, Jajo
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=E7LS2JGFPLTH2
 Tags: internal product code, company product number, product id number, product id code, second sku
 Requires at least: 3.0.1
-Tested up to: 4.9.8
+Tested up to: 5.0.3
 Version: 1.0.0
 Stable tag: 1.0.0
 License: GPLv3 or later license and included
 URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-This plugin will allow a user to add a unique internal product identifier in addition to the GTIN, EAN, SKU and UPC throughout the order process.
+This plugin will allow a user to add a unique internal product identifier in addition to the GTIN, EAN, SKU or UPC throughout the order process. No setup, small memory footprint and concise results.
 
 == Description ==
 
 This is a very simple plugin that many website designers and business owners look for. Often a website designer or company owner simply wants to add an internal product code to their WooCommerce build. A code that is in addition to the GTIN, EAN, SKU and UPC throughout the order process. However, all current plugin add-on provisions entail complex setups and functions which result in extra memory usage, system conflicts and frequent updates. This plugin eliminates all the hurdles by providing a simple solution without excessive options. Simply install, enter your product codes within each post and publish. Nothing more to it than that!
 
-The added field is compliant to mappable data import and export schemes. This same compliance allows the field to be included in a Google Merchant product feed, if mapped during the feed setup using any number of third party plugins.
+The added field is compliant to mappable data import and export schemes. This same compliance allows the field to be included in a Google Merchant product feed, if mapped during the feed setup using any number of third party plugins. Language support include: English, Spanish and French.
 
 == Installation ==
 
@@ -59,6 +59,5 @@ None to report as of the release version
 
 == Changelog ==
 
-1.0.0 09/05/18
-
+1.0.0 01/15/19
 - Initial release

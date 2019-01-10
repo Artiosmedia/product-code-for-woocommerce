@@ -1,72 +1,96 @@
 msgid ""
 msgstr ""
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: Product Code for WooCommerce\n"
-"POT-Creation-Date: 2018-08-14 09:20+1000\n"
-"PO-Revision-Date: 2018-08-14 09:21+1000\n"
+"POT-Creation-Date: 2018-12-18 18:44+0100\n"
+"PO-Revision-Date: 2018-12-18 18:44+0100\n"
+"Last-Translator: \n"
 "Language-Team: \n"
+"Language: en_US\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.9\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.2\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: product-code-for-woocommerce.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;"
-"esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;"
-"esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
-"Last-Translator: \n"
-"Language: en_US\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: product-code-for-woocommerce.php:38
-msgid "Donation for Homeless"
-msgstr ""
+#: classes/Admin.php:33 classes/Main.php:73 classes/Main.php:79
+#: classes/Main.php:93 classes/Main.php:97 classes/Main.php:119
+#: classes/Main.php:129 classes/Main.php:148 templates/product-meta-row.php:13
+#: templates/quick-edit-text-field.php:13
+#: templates/quick-edit-text-field.php:15 templates/variation-field.php:14
+msgid "Product Code"
+msgstr "Product Code"
 
-#: product-code-for-woocommerce.php:53
-#, php-format
-msgid "More information about %s"
-msgstr ""
-
-#: product-code-for-woocommerce.php:53
-msgid "View Details"
-msgstr ""
-
-#: product-code-for-woocommerce.php:71 product-code-for-woocommerce.php:94
-msgid "EAN code"
-msgstr ""
-
-#: product-code-for-woocommerce.php:74 product-code-for-woocommerce.php:96
+#: classes/Admin.php:35
 msgid ""
 "Product code refers to a company’s unique internal product identifier, "
 "needed for online product fulfillment"
 msgstr ""
+"Product code refers to a company’s unique internal product identifier, "
+"needed for online product fulfillment"
 
-#: product-code-for-woocommerce.php:155 product-code-for-woocommerce.php:158
-#: product-code-for-woocommerce.php:217
-msgid "Product code: "
-msgstr ""
+#: classes/Main.php:157
+msgid "Product Code Visibility"
+msgstr "Product Code Visibility"
 
-#. Plugin Name of the plugin/theme
-msgid "Product Code for WooCommerce"
-msgstr ""
+#: classes/Main.php:157
+msgid "Show or hide product code on product page"
+msgstr "Show or hide product code on product page"
 
-#. Plugin URI of the plugin/theme
-msgid "http://wordpress.org/plugins/product-code-for-woocommerce"
-msgstr ""
+#: classes/Main.php:160
+msgid "Show Product"
+msgstr "Show Product"
 
-#. Description of the plugin/theme
-msgid ""
-"Plugin will allow a user to add a unique internal product identifier "
-"throughout the order process."
-msgstr ""
+#: classes/Main.php:165
+msgid "Show Product Code on Product Page"
+msgstr "Show Product Code on Product Page"
 
-#. Author of the plugin/theme
-msgid "Artios Media"
-msgstr ""
+#: product-code-for-woocommerce.php:37
+msgid "Settings"
+msgstr "Settings"
 
-#. Author URI of the plugin/theme
-msgid "http://www.artiosmedia.com"
-msgstr ""
+#: templates/product-meta-row.php:14
+msgid "N/A"
+msgstr "N/A"
+
+#~ msgid "More information about %s"
+#~ msgstr "More information about %s"
+
+#~ msgid "View Details"
+#~ msgstr "View Details"
+
+#~ msgid "Donation for Homeless"
+#~ msgstr "Donation for Homeless"
+
+#~ msgid "Product Code for WooCommerce"
+#~ msgstr "Product Code for WooCommerce"
+
+#~ msgid "http://wordpress.org/plugins/product-code-for-woocommerce"
+#~ msgstr "http://wordpress.org/plugins/product-code-for-woocommerce"
+
+#~| msgid ""
+#~| "Plugin will allow a user to add a unique internal product identifier "
+#~| "throughout the order process."
+#~ msgid ""
+#~ "This plugin will allow a user to add a unique internal product identifier "
+#~ "in addition to the GTIN, EAN, SKU and UPC throughout the order process."
+#~ msgstr ""
+#~ "This plugin will allow a user to add a unique internal product identifier "
+#~ "in addition to the GTIN, EAN, SKU and UPC throughout the order process."
+
+#~ msgid "Artios Media"
+#~ msgstr "Artios Media"
+
+#~ msgid "http://www.artiosmedia.com"
+#~ msgstr "http://www.artiosmedia.com"
+
+#~ msgid "EAN code"
+#~ msgstr "EAN code"
