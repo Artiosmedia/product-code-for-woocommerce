@@ -4,7 +4,7 @@ Contributors: Artiosmedia, xedin.unknown
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=E7LS2JGFPLTH2
 Tags: internal product code, company product number, product id number, product id code, second sku
 Requires at least: 3.0.1
-Tested up to: 5.0.1
+Tested up to: 5.0.3
 Version: 1.0.0
 Stable tag: 1.0.0
 License: GPLv3 or later license and included
@@ -59,5 +59,5 @@ None to report as of the release version
 
 == Changelog ==
 
-1.0.0 12/20/18
+1.0.0 01/15/19
 - Initial release
