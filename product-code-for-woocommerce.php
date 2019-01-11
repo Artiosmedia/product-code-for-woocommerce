@@ -28,6 +28,7 @@ define( 'PRODUCT_CODE_FIELD_NAMES', [
 	'nonvariant' => '_product_code'
 ]);
 define( 'PRODUCT_CODE_TEMPLATE_PATH', __DIR__ . '/templates' );
+define( 'PRODUCT_CODE_PAYPAL_ID', 'E7LS2JGFPLTH2' );
 
 require_once( __DIR__ . '/vendor/autoload.php' );
 
