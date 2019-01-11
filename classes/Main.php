@@ -6,6 +6,8 @@ class Main {
 
     public function __construct()
     {
+        ini_set( 'display_errors', 1 );
+        error_reporting( E_ALL );
         $this->admin = new Admin();
 
         $this->actions();
@@ -19,11 +21,12 @@ class Main {
         add_filter( 'woocommerce_add_cart_item_data', [ $this, 'add_code_to_cart_product' ], 10, 3 );
         add_filter( 'woocommerce_get_item_data', [ $this, 'retrieve_product_code_in_cart' ], 10, 2 );
         add_action( 'woocommerce_checkout_create_order_line_item', [ $this, 'process_order_item' ], 10, 4 );
-        // add_action( 'woocommerce_order_item_get_formatted_meta_data', [ $this, 'get_formatted_order_item_meta_data' ], 10, 2 );
+        add_action( 'woocommerce_order_item_get_formatted_meta_data', [ $this, 'get_formatted_order_item_meta_data' ], 10, 2 );
         add_action( 'woocommerce_order_item_display_meta_key', [ $this, 'get_order_item_meta_display_key' ], 10, 3 );
         add_action( 'woocommerce_product_meta_start', [ $this, 'display_product_code' ] );
         add_filter( 'woocommerce_get_sections_products', [ $this, 'add_woocommerce_settings' ] );
         add_filter( 'woocommerce_get_settings_products', [ $this, 'add_product_code_settings' ], 10, 2 );
+        add_filter( 'plugin_row_meta', [ $this, 'plugin_row_filter' ], 10, 3 );
         add_action( 'wp_ajax_product_code', [ $this, 'ajax_get_product_code' ] );
         add_action( 'wp_ajax_nopriv_product_code', [ $this, 'ajax_get_product_code' ] );
     }
@@ -40,6 +43,32 @@ class Main {
             wp_enqueue_script( 'product-code-for-woocommerce', PRODUCT_CODE_URL . '/assets/js/editor.js', [ 'jquery' ] );
             wp_localize_script( 'product-code-for-woocommerce', 'PRODUCT_CODE', [ 'ajax' => admin_url( 'admin-ajax.php' ) ] );
         endif;
+    }
+
+    public function plugin_row_filter( $links, $plugin_file, $plugin_data ) {
+        // Not our plugin.
+
+        if ( strpos( $plugin_file, 'product-code-for-woocommerce.php' ) === false ) {
+            return $links;
+        }
+
+        $slug = basename( $plugin_data['PluginURI'] );
+        // $link_template = $this->get_template( 'link' );
+
+        $links[2] = sprintf( '<a href="%s" title="More information about %s">%s</a>', add_query_arg([
+                        'tab'       => 'plugin-information',
+                        'plugin'    => $slug,
+                        'TB_iframe' => 'true',
+                        'width'     => 772,
+                        'height'    => 563,
+                    ], self_admin_url( 'plugin-install.php' ) ), $plugin_data['Name'], __( 'View Details', 'product-code-for-woocommerce' ) ); 
+
+        $links['donation'] = sprintf( '<a href="%s" target="_blank">%s</a>', add_query_arg([
+                'cmd'              => '_s-xclick',
+                'hosted_button_id' => PRODUCT_CODE_PAYPAL_ID
+        ], 'https://www.paypal.com/cgi-bin/webscr' ), __( 'Donation for Homeless', 'product-code-for-woocommerce' ) ); 
+
+        return $links;
     }
 
     public function add_code_to_cart_product( $cart_item_data, $product_id, $variation_id )
