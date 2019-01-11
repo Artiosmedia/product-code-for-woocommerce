@@ -6,8 +6,6 @@ class Main {
 
     public function __construct()
     {
-        ini_set( 'display_errors', 1 );
-        error_reporting( E_ALL );
         $this->admin = new Admin();
 
         $this->actions();
