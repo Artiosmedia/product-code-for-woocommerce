@@ -63,7 +63,7 @@ class Admin {
         $field_name = PRODUCT_CODE_FIELD_NAMES[ 'variant' ];
         $code = get_post_meta( $variation->ID, $field_name, true );
 
-        require_once( PRODUCT_CODE_TEMPLATE_PATH . '/variation-field.php' );
+        require( PRODUCT_CODE_TEMPLATE_PATH . '/variation-field.php' );
         return; 
     }
 
