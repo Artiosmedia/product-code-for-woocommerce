@@ -8,7 +8,7 @@ class Admin {
         add_action( 'woocommerce_product_options_inventory_product_data', [ $this, 'add_inventory_field' ] );
         add_action( 'woocommerce_process_product_meta', [ $this, 'save_product_code_meta' ] );
         add_action( 'woocommerce_product_after_variable_attributes', [ $this, 'add_variation_field' ], 10, 3 );
-        add_action( 'woocommerce_save_product_variation', [ $this, 'save_variation_field' ], 10, 1 );
+        add_action( 'woocommerce_save_product_variation', [ $this, 'save_variation_field' ], 10, 2 );
         // add_action( 'woocommerce_product_quick_edit_end', [ $this, 'add_quick_edit_field' ] );
     }
 
@@ -58,7 +58,7 @@ class Admin {
         return;
     }
 
-    public function add_variation_field( $_, $__, $variation )
+    public function add_variation_field( $i, $arr, $variation )
     {
         $field_name = PRODUCT_CODE_FIELD_NAMES[ 'variant' ];
         $code = get_post_meta( $variation->ID, $field_name, true );
@@ -67,12 +67,13 @@ class Admin {
         return; 
     }
 
-    public function save_variation_field( $variation_id )
+    public function save_variation_field( $variation_id, $i )
     {
         $field_name = PRODUCT_CODE_FIELD_NAMES[ 'variant' ];
-
-        if( !empty( $_POST[ $field_name ] ) ) {
-            $code = sanitize_text_field( $_POST[ $field_name ] );
+        $form_field_name = sprintf( '%s_%d', PRODUCT_CODE_FIELD_NAMES[ 'variant' ], $i );
+        
+        if( !empty( $_POST[ $form_field_name ] ) ) {
+            $code = sanitize_text_field( $_POST[ $form_field_name ] );
             if( !add_post_meta( $variation_id, $field_name, $code, true ) ) 
                     update_post_meta( $variation_id, $field_name, $code );
         } else {

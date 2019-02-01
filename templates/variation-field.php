@@ -11,7 +11,7 @@
 <div class="form-row form-row-first">
     <?php 
     woocommerce_wp_text_input([
-        'id'          => $field_name,
+        'id'          => sprintf( '%s_%d', $field_name, $i ),
         'label'       => __( 'Product Code', 'product-code-for-woocommerce' ),
         'desc_tip'    => true,
         'description' => __( 'Product code refers to a company’s unique internal product identifier, needed for online product fulfillment', 'product-code-for-woocommerce' ),
